@@ -3,7 +3,7 @@ package cli
 import (
 	"log"
 
-	"github.com/song940/tuntap-go/ethernet"
+	"github.com/song940/tuntap-go/packet"
 	"github.com/song940/tuntap-go/tuntap"
 )
 
@@ -16,26 +16,18 @@ func Run() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	// buf := make([]byte, 1500)
-	// for {
-	// 	n, err := ifce.Read(buf)
-	// 	if err != nil {
-	// 		log.Fatal(err)
-	// 	}
-	// 	log.Printf("packet: % x\n", buf[:n])
-	// }
-	var frame ethernet.Frame
-
+	log.Printf("Interface Name: %s\n", ifce.Name())
+	var packet packet.Packet
+	packet.Resize(1500)
 	for {
-		frame.Resize(1500)
-		n, err := ifce.Read([]byte(frame))
+		n, err := ifce.Read(packet)
 		if err != nil {
 			log.Fatal(err)
 		}
-		frame = frame[:n]
-		log.Printf("Ethertype: % x\n", frame.Ethertype())
-		log.Printf("Src: %s\n", frame.Source())
-		log.Printf("Dst: %s\n", frame.Destination())
-		log.Printf("Payload: % x\n", frame.Payload())
+		packet.Resize(n)
+		header, _ := packet.ParseHeader()
+		log.Println(header.Version)
+		log.Println(header.Src)
+		log.Println(header.Dst)
 	}
 }

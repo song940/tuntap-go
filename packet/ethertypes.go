@@ -1,4 +1,4 @@
-package ethernet
+package packet
 
 // Ethertype is a type used represent the ethertype of an ethernet frame.
 // Defined as a 2-byte array, variables of this type are intended to be used as

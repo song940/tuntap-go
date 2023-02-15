@@ -1,6 +1,8 @@
-package ethernet
+package packet
 
-import "net"
+import (
+	"net"
+)
 
 // Frame represents an ethernet frame. The length of the underlying slice of a
 // Frame should always reflect the ethernet frame length.

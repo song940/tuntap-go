@@ -78,3 +78,7 @@ func (ifce *Interface) IsTAP() bool {
 func (ifce *Interface) Name() string {
 	return ifce.name
 }
+
+func (ifce *Interface) SetIP() {
+
+}
